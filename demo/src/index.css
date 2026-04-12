@@ -1,0 +1,64 @@
+@import "tailwindcss";
+@import "../../src/index.css";
+
+@font-face {
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/sans/PretendardVariable.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Favorit Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/mono/ABCFavoritMonoEdu-Regular.woff2") format("woff2"),
+    url("/fonts/mono/ABCFavoritMonoEdu-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Favorit Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/mono/ABCFavoritMonoEdu-Medium.woff2") format("woff2"),
+    url("/fonts/mono/ABCFavoritMonoEdu-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Favorit Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/mono/ABCFavoritMonoEdu-Bold.woff2") format("woff2"),
+    url("/fonts/mono/ABCFavoritMonoEdu-Bold.woff") format("woff");
+}
+
+@theme {
+  --font-sans: "Pretendard", system-ui, sans-serif;
+  --font-mono: "Favorit Mono", system-ui, monospace;
+}
+
+body {
+  @apply antialiased bg-white dark:bg-black dark:text-white text-sm font-[450];
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply -tracking-[0.0075em];
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

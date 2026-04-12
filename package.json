@@ -1,0 +1,37 @@
+{
+  "name": "gradient-border-plugin",
+  "version": "0.0.0-development",
+  "description": "TailwindCSS plugin for adding gradient borders.",
+  "scripts": {
+    "build": "mkdir -p dist && cp src/index.css dist/gradient-border-plugin.css",
+    "format": "prettier --write --ignore-unknown .",
+    "demo": "open demo/index.html"
+  },
+  "exports": "./src/index.css",
+  "main": "./src/index.css",
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "gradient border",
+    "tailwind gradient border",
+    "css gradient border",
+    "gradient border effect",
+    "pure css gradient border",
+    "tailwind pure css plugin",
+    "tailwindcss"
+  ],
+  "repository": "flornkm/gradient-border-plugin",
+  "author": {
+    "name": "flornkm",
+    "website": "https://floriankiem.com"
+  },
+  "license": "MIT",
+  "prettier": {
+    "printWidth": 100
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.1.13",
+    "tailwindcss": "4.1.13"
+  }
+}
