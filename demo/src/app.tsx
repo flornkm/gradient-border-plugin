@@ -2,50 +2,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "./utils/cn";
 
-const WIDTHS = [
-  { label: "1px", className: "gradient-border" },
-  { label: "2px", className: "gradient-border-2" },
-  { label: "3px", className: "gradient-border-3" },
-  { label: "4px", className: "gradient-border-4" },
-];
-
-const DIRECTIONS = [
-  { label: "To B", className: "gradient-border-to-b" },
-  { label: "To R", className: "gradient-border-to-r" },
-  { label: "To TR", className: "gradient-border-to-tr" },
-  { label: "To BR", className: "gradient-border-to-br" },
-  { label: "To L", className: "gradient-border-to-l" },
-  { label: "To T", className: "gradient-border-to-t" },
-];
-
-const GRADIENTS = [
-  {
-    label: "Blue to Pink",
-    from: "gradient-border-from-blue-500",
-    to: "gradient-border-to-pink-300",
-  },
-  {
-    label: "Indigo to Cyan",
-    from: "gradient-border-from-indigo-500",
-    to: "gradient-border-to-cyan-400",
-  },
-  {
-    label: "Rose to Amber",
-    from: "gradient-border-from-rose-500",
-    to: "gradient-border-to-amber-300",
-  },
-  {
-    label: "Emerald to Teal",
-    from: "gradient-border-from-emerald-500",
-    to: "gradient-border-to-teal-300",
-  },
-  {
-    label: "Violet to Fuchsia",
-    from: "gradient-border-from-violet-500",
-    to: "gradient-border-to-fuchsia-400",
-  },
-];
-
 const INSTALL_COMMANDS = [
   { label: "npm", command: "npm i gradient-border-plugin" },
   { label: "pnpm", command: "pnpm add gradient-border-plugin" },
