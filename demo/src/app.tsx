@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "./utils/cn";
+import { GradientConfigurator } from "./components/gradient-configurator";
 
 const INSTALL_COMMANDS = [
   { label: "npm", command: "npm i gradient-border-plugin" },
@@ -22,7 +23,9 @@ function CodeField({ code, prefix }: { code: string; prefix?: string }) {
     <div className="flex items-start justify-between gap-3 w-full rounded-xl border border-neutral-200 dark:border-neutral-800 px-4 py-3 overflow-hidden">
       <div className="min-w-0 flex-1 [mask-image:linear-gradient(to_right,black_calc(100%-2rem),transparent)]">
         <pre className="tabular-nums font-normal text-sm whitespace-pre overflow-x-auto scrollbar-none">
-          {prefix && <span className="text-neutral-300 dark:text-neutral-600 mr-2">{prefix}</span>}
+          {prefix && (
+            <span className="text-neutral-300 dark:text-neutral-600 mr-2">{prefix}</span>
+          )}
           {code}
         </pre>
       </div>
@@ -73,6 +76,9 @@ function App() {
           </span>{" "}
           - perfect for glassy, Liquid Glass-style reflections in your borders.
         </p>
+
+        {/* Configurator */}
+        <GradientConfigurator />
 
         {/* Install */}
         <div className="w-full space-y-3">
