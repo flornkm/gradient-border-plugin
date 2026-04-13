@@ -349,7 +349,7 @@ export function GradientConfigurator() {
                     {selectedStop === key && (
                       <motion.span
                         layoutId="stop-bg"
-                        className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 rounded-md"
+                        className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 rounded-full"
                         transition={{ type: "spring", duration: 0.35, bounce: 0.15 }}
                       />
                     )}
