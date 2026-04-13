@@ -302,7 +302,7 @@ export function GradientConfigurator() {
 
   return (
     <div className="w-full space-y-5">
-      <h2 className="font-semibold leading-tight">Try it out</h2>
+      <h2 className="font-medium leading-tight">Try it out</h2>
 
       <div className="p-8 rounded-md bg-neutral-50 dark:bg-neutral-950 space-y-6">
         {/* Preview bubble */}
@@ -349,7 +349,7 @@ export function GradientConfigurator() {
                     {selectedStop === key && (
                       <motion.span
                         layoutId="stop-bg"
-                        className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 rounded-full"
+                        className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 rounded-md"
                         transition={{ type: "spring", duration: 0.35, bounce: 0.15 }}
                       />
                     )}

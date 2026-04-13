@@ -23,9 +23,7 @@ function CodeField({ code, prefix }: { code: string; prefix?: string }) {
     <div className="flex items-start justify-between gap-3 w-full rounded-xl border border-neutral-200 dark:border-neutral-800 px-4 py-3 overflow-hidden">
       <div className="min-w-0 flex-1 [mask-image:linear-gradient(to_right,black_calc(100%-2rem),transparent)]">
         <pre className="tabular-nums font-normal text-sm whitespace-pre overflow-x-auto scrollbar-none">
-          {prefix && (
-            <span className="text-neutral-300 dark:text-neutral-600 mr-2">{prefix}</span>
-          )}
+          {prefix && <span className="text-neutral-300 dark:text-neutral-600 mr-2">{prefix}</span>}
           {code}
         </pre>
       </div>
@@ -54,10 +52,10 @@ function App() {
   const [pm, setPm] = useState(0);
 
   return (
-    <main className="min-h-screen px-4 pt-4 pb-16">
+    <main className="min-h-screen px-4 pt-4 md:py-20">
       <div className="w-full max-w-3xl flex space-y-8 flex-col items-start mx-auto">
         <div className="space-y-2">
-          <h1 className="text-base font-semibold leading-tight">Gradient Border Plugin</h1>
+          <h1 className="text-base font-medium leading-tight">Gradient Border Plugin</h1>
           <p className="text-sm mb-1.5 leading-tight text-neutral-400">
             A simple Tailwind plugin for beautiful gradient borders using mask-composite.
           </p>
@@ -82,7 +80,7 @@ function App() {
 
         {/* Install */}
         <div className="w-full space-y-3">
-          <h2 className="font-semibold leading-tight">Install</h2>
+          <h2 className="font-medium leading-tight">Install</h2>
           <div className="flex items-center gap-3">
             {INSTALL_COMMANDS.map((p, i) => (
               <button
@@ -104,7 +102,7 @@ function App() {
 
         {/* Usage */}
         <div className="w-full space-y-3">
-          <h2 className="font-semibold leading-tight">Usage</h2>
+          <h2 className="font-medium leading-tight">Usage</h2>
           <div>
             <h3 className="text-sm mb-1.5 leading-tight text-neutral-400">Tailwind stylesheet</h3>
             <CodeField code="@import 'gradient-border-plugin';" />
