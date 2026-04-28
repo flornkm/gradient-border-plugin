@@ -3,14 +3,14 @@
   "version": "0.0.0-development",
   "description": "TailwindCSS plugin for adding gradient borders.",
   "scripts": {
-    "build": "mkdir -p dist && cp src/index.css dist/gradient-border-plugin.css",
+    "build": "node scripts/build.mjs",
     "format": "prettier --write --ignore-unknown .",
     "demo": "open demo/index.html"
   },
-  "exports": "./src/index.css",
-  "main": "./src/index.css",
+  "exports": "./dist/gradient-border-plugin.css",
+  "main": "./dist/gradient-border-plugin.css",
   "files": [
-    "src"
+    "dist"
   ],
   "keywords": [
     "gradient border",
