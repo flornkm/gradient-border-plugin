@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/flornkm/gradient-border-plugin/compare/v1.0.0...v1.0.1) (2026-04-28)
+
+### Bug Fixes
+
+* build ([ab778f0](https://github.com/flornkm/gradient-border-plugin/commit/ab778f0e9160b35eb87ffa43e3a70ebf255a8b8a))
+
 ## 1.0.0 (2026-04-28)
 
 ### Features
