@@ -1,0 +1,81 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install deps
+        run: npm install --no-audit --fund=false
+
+      - name: Build (if script exists)
+        run: npm run build --if-present
+
+      - name: Configure npm auth (npmjs)
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          rm -f ~/.npmrc
+          printf "//registry.npmjs.org/:_authToken=%s\n" "${NPM_TOKEN}" > ~/.npmrc
+          npm whoami
+
+      - name: Semantic Release
+        id: semantic
+        uses: cycjimmy/semantic-release-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        with:
+          extra_plugins: |
+            @semantic-release/npm
+            @semantic-release/github
+            @semantic-release/changelog
+            @semantic-release/git
+            conventional-changelog-conventionalcommits
+
+      - name: Publish to GitHub Packages (scoped)
+        if: steps.semantic.outputs.new_release_published == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          OWNER_LC=$(echo "${GITHUB_REPOSITORY%%/*}" | tr '[:upper:]' '[:lower:]')
+          VERSION="${{ steps.semantic.outputs.new_release_version }}"
+
+          if [ -z "$VERSION" ]; then
+            echo "Missing new_release_version"
+            exit 1
+          fi
+
+          cat > .npmrc <<EOF
+          @${OWNER_LC}:registry=https://npm.pkg.github.com
+          //npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}
+          always-auth=true
+          EOF
+
+                    cp package.json package.json.bak
+                    node -e "let p=require('./package.json'); p.name='@${OWNER_LC}/gradient-border-plugin'; p.version='${VERSION}'; require('fs').writeFileSync('package.json', JSON.stringify(p,null,2))"
+
+                    npm publish --registry=https://npm.pkg.github.com --userconfig=.npmrc
+
+                    mv -f package.json.bak package.json
+                    rm -f .npmrc
