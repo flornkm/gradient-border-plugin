@@ -145,3 +145,27 @@
     background: none !important;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/*  animate-gradient-border — rotates the angle of whatever gradient   */
+/*  the element already has. Pairs with any combination of the         */
+/*  from, via, and to color utilities. Override speed via              */
+/*  --gradient-border-duration (default 4s).                           */
+/* ------------------------------------------------------------------ */
+
+@property --gradient-border-rotation {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes gradient-border {
+  to {
+    --gradient-border-rotation: 360deg;
+  }
+}
+
+@utility animate-gradient-border {
+  --gradient-border-angle: var(--gradient-border-rotation);
+  animation: gradient-border var(--gradient-border-duration, 4s) linear infinite;
+}
