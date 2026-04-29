@@ -302,8 +302,6 @@ export function GradientConfigurator() {
 
   return (
     <div className="w-full space-y-5">
-      <h2 className="font-medium leading-tight">Try it out</h2>
-
       <div className="p-8 rounded-md bg-neutral-50 dark:bg-neutral-950 space-y-6">
         {/* Preview bubble */}
         <div className="flex justify-center py-24">

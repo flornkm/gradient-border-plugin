@@ -61,25 +61,6 @@ function App() {
           </p>
         </div>
 
-        <p className="text-base">
-          With regular CSS borders you only get one color per side, so they meet at hard corners
-          and never actually blend, like{" "}
-          <span className="inline-block mx-0.5 border-2 border-t-blue-400 border-r-pink-400 border-b-blue-400 border-l-pink-400 px-1.5 py-0.5 rounded-md bg-white dark:bg-neutral-900 align-middle text-sm">
-            this
-          </span>
-          . This plugin draws a real gradient across the whole border, so you can build things like{" "}
-          <span className="inline-block gradient-border gradient-border-to-t gradient-border-from-white gradient-border-to-neutral-200 dark:gradient-border-to-neutral-700 dark:gradient-border-from-neutral-700/20 shadow-lg shadow-black/5 cursor-pointer px-3 py-1 rounded-full bg-linear-to-t from-neutral-50 to-white dark:from-neutral-800 dark:to-neutral-800/80 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:brightness-105 active:scale-95 align-middle">
-            this
-          </span>
-          ,{" "}
-          <span className="inline-block size-8 rounded-full gradient-border gradient-border-to-tl gradient-border-from-white gradient-border-via-neutral-100 gradient-border-to-white dark:gradient-border-to-neutral-500 dark:gradient-border-via-neutral-800 dark:gradient-border-from-neutral-500 shadow-lg shadow-black/10 cursor-pointer bg-linear-to-t from-neutral-100 to-neutral-50 dark:from-neutral-800 dark:to-neutral-800/80 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:brightness-105 active:scale-90 align-middle" />
-          , or{" "}
-          <span className="inline-block gradient-border gradient-border-to-t gradient-border-from-blue-100/90 gradient-border-to-sky-300/40 dark:gradient-border-from-blue-500/10 dark:gradient-border-to-sky-400/25 shadow-lg shadow-blue-500/10 cursor-pointer px-3 py-1 rounded-full bg-linear-to-t from-sky-50 to-blue-100 dark:from-sky-950/80 dark:to-sky-800/30 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:brightness-105 active:scale-95 align-middle text-sky-950 dark:text-sky-100">
-            this
-          </span>
-          .
-        </p>
-
         {/* Configurator */}
         <GradientConfigurator />
 
@@ -131,6 +112,24 @@ function App() {
             <CodeField code="<div className='gradient-border [--gradient-border:conic-gradient(from_90deg,red,blue,red)]' />" />
           </div>
         </div>
+
+        <a
+          href="https://github.com/flornkm/gradient-border-plugin"
+          target="_blank"
+          rel="noopener"
+          className="group inline-flex items-center gap-2 gradient-border gradient-border-to-t gradient-border-from-white gradient-border-to-neutral-200 dark:gradient-border-from-neutral-700/20 dark:gradient-border-to-neutral-700 shadow-lg shadow-black/5 cursor-pointer px-3.5 py-1.5 rounded-full bg-linear-to-t from-neutral-50 to-white dark:from-neutral-800 dark:to-neutral-800/80 text-sm font-medium text-neutral-900 dark:text-neutral-100 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:brightness-105 active:scale-95"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden
+          >
+            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+          </svg>
+          <span>Star on GitHub</span>
+        </a>
 
         <article className="w-full pt-8 mt-4 border-t border-neutral-200 dark:border-neutral-800 prose prose-sm dark:prose-invert max-w-none [&_h2]:font-medium [&_h2]:text-base [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:font-medium [&_h3]:text-sm [&_h3]:mt-4 [&_h3]:mb-1 [&_p]:text-sm [&_p]:text-neutral-500 [&_p]:dark:text-neutral-400 [&_p]:leading-relaxed [&_li]:text-sm [&_li]:text-neutral-500 [&_li]:dark:text-neutral-400 [&_code]:text-xs [&_code]:bg-neutral-100 [&_code]:dark:bg-neutral-900 [&_code]:px-1 [&_code]:py-0.5 [&_code]:rounded">
           <h2>About the Gradient Border Plugin</h2>
