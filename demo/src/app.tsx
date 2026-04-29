@@ -62,17 +62,22 @@ function App() {
         </div>
 
         <p className="text-base">
-          This tailwind plugin lets you create custom border gradients. With it you can create{" "}
+          CSS borders only let you color each side on its own —{" "}
+          <span className="inline-block border-2 border-t-blue-400 border-r-pink-400 border-b-blue-400 border-l-pink-400 px-3 py-1 rounded-md bg-white dark:bg-neutral-900 align-middle text-sm">
+            like this
+          </span>{" "}
+          — meeting at hard corners, never blending. This plugin draws a real gradient across the
+          whole border, like{" "}
           <span className="inline-block gradient-border gradient-border-to-t gradient-border-from-white gradient-border-to-neutral-200 dark:gradient-border-to-neutral-700 dark:gradient-border-from-neutral-700/20 shadow-lg shadow-black/5 cursor-pointer px-3 py-1 rounded-full bg-linear-to-t from-neutral-50 to-white dark:from-neutral-800 dark:to-neutral-800/80 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:brightness-105 active:scale-95 align-middle">
-            Glass Buttons
+            this
           </span>
           ,{" "}
           <span className="inline-block size-8 rounded-full gradient-border gradient-border-to-tl gradient-border-from-white gradient-border-via-neutral-100 gradient-border-to-white dark:gradient-border-to-neutral-500 dark:gradient-border-via-neutral-800 dark:gradient-border-from-neutral-500 shadow-lg shadow-black/10 cursor-pointer bg-linear-to-t from-neutral-100 to-neutral-50 dark:from-neutral-800 dark:to-neutral-800/80 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:brightness-105 active:scale-90 align-middle" />
           , or{" "}
           <span className="inline-block gradient-border gradient-border-to-t gradient-border-from-blue-100/90 gradient-border-to-sky-300/40 dark:gradient-border-from-blue-500/10 dark:gradient-border-to-sky-400/25 shadow-lg shadow-blue-500/10 cursor-pointer px-3 py-1 rounded-full bg-linear-to-t from-sky-50 to-blue-100 dark:from-sky-950/80 dark:to-sky-800/30 transition-all duration-200 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:brightness-105 active:scale-95 align-middle text-sky-950 dark:text-sky-100">
-            Colorful Pills
-          </span>{" "}
-          - perfect for glassy, Liquid Glass-style reflections in your borders.
+            this
+          </span>
+          .
         </p>
 
         {/* Configurator */}
