@@ -1,0 +1,24 @@
+# Tailwind CSS Gradient Border Plugin
+
+> A simple Tailwind CSS plugin for beautiful gradient borders using mask-composite. Mirrors Tailwind's gradient utilities with `from`/`via`/`to` color stops, four configurable widths, an animated rotating variant, and full support for arbitrary color values, alpha modifiers, and conic/radial overrides.
+
+This project ships as a CSS plugin you import alongside TailwindCSS. Apply the `gradient-border` class to any element to enable a gradient stroke that follows its `border-radius`. Combine with direction utilities like `gradient-border-to-r`, color stops like `gradient-border-from-blue-500`, and width variants like `gradient-border-2`. For full control, override `--gradient-border` with any CSS background image (conic, radial, multi-stop, etc.).
+
+## Getting Started
+
+- [README.md (GitHub)](https://github.com/flornkm/gradient-border-plugin/blob/main/README.md): Installation, basic usage, and full class reference.
+- [Documentation & Examples](https://gradient-border.floriankiem.com/): Live configurator and copy-paste snippets.
+
+## Agent Instructions
+
+- [AGENTS.md (GitHub)](https://github.com/flornkm/gradient-border-plugin/blob/main/AGENTS.md): Environment setup and class usage for agents and automations.
+
+## Project
+
+- [Repository](https://github.com/flornkm/gradient-border-plugin): Source code and issues.
+- [Homepage](https://gradient-border.floriankiem.com/): Single-page site with live demo and references.
+- [npm package](https://www.npmjs.com/package/gradient-border-plugin): Install via `npm i gradient-border-plugin`.
+
+## Optional
+
+- [Author](https://floriankiem.com): Maintainer information.

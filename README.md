@@ -1,3 +1,5 @@
+<img src="demo/public/images/readme-header.webp" alt="Gradient Border Plugin" />
+
 # Gradient Border Plugin
 
 A simple Tailwind plugin that adds beautiful gradient borders to your elements.
