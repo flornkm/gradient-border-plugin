@@ -1,3 +1,9 @@
+## [1.1.3](https://github.com/flornkm/gradient-border-plugin/compare/v1.1.2...v1.1.3) (2026-04-29)
+
+### Bug Fixes
+
+* OG image ([684eafa](https://github.com/flornkm/gradient-border-plugin/commit/684eafaa2e69c13ac1ef4aba36f60402c5ed66b5))
+
 ## [1.1.2](https://github.com/flornkm/gradient-border-plugin/compare/v1.1.1...v1.1.2) (2026-04-29)
 
 ### Bug Fixes
