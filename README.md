@@ -44,6 +44,28 @@ For complex gradients (conic, radial, etc.), set the CSS variable directly:
 <div class="gradient-border [--gradient-border:conic-gradient(from_90deg,red,blue,red)]" />
 ```
 
+### Alpha modifiers
+
+Color stops accept Tailwind-style alpha modifiers:
+
+```html
+<div class="gradient-border gradient-border-from-blue-500/50 gradient-border-to-pink-300/20" />
+```
+
+### Animation
+
+Add `animate-gradient-border` to rotate the gradient angle continuously. Pairs with any combination of `from`/`via`/`to` colors:
+
+```html
+<div class="gradient-border-2 animate-gradient-border gradient-border-from-indigo-500 gradient-border-via-purple-500 gradient-border-to-pink-500 rounded-lg" />
+```
+
+Override the speed with `--gradient-border-duration` (defaults to `4s`):
+
+```html
+<div class="gradient-border animate-gradient-border [--gradient-border-duration:2s]" />
+```
+
 ## Available classes
 
 ### Base & width
@@ -55,6 +77,7 @@ For complex gradients (conic, radial, etc.), set the CSS variable directly:
 | `gradient-border-3` | 3px gradient border |
 | `gradient-border-4` | 4px gradient border |
 | `gradient-border-none` | Remove gradient border |
+| `animate-gradient-border` | Rotate the gradient angle continuously |
 
 ### Direction (mirrors `bg-linear-to-*`)
 
@@ -87,6 +110,7 @@ For complex gradients (conic, radial, etc.), set the CSS variable directly:
 | `--gradient-border-from` | `rgba(0, 0, 0, 0.15)` |
 | `--gradient-border-to` | `transparent` |
 | `--gradient-border-via` | *(auto midpoint)* |
+| `--gradient-border-duration` | `4s` (used by `animate-gradient-border`) |
 
 ## Tailwind v4 theme customization
 
