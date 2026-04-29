@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/flornkm/gradient-border-plugin/compare/v1.1.0...v1.1.1) (2026-04-29)
+
+### Bug Fixes
+
+* landingpage + README ([8c3b46c](https://github.com/flornkm/gradient-border-plugin/commit/8c3b46cc7d0db92e2f15ec2077289c039d4005a4))
+
 ## [1.1.0](https://github.com/flornkm/gradient-border-plugin/compare/v1.0.1...v1.1.0) (2026-04-29)
 
 ### Features
