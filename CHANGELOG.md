@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/flornkm/gradient-border-plugin/compare/v1.0.1...v1.1.0) (2026-04-29)
+
+### Features
+
+* add animation utility ([6d40ea1](https://github.com/flornkm/gradient-border-plugin/commit/6d40ea12dbc07841311d02f80f4e2aa38897cbae))
+
 ## [1.0.1](https://github.com/flornkm/gradient-border-plugin/compare/v1.0.0...v1.0.1) (2026-04-28)
 
 ### Bug Fixes
