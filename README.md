@@ -1,4 +1,4 @@
-<img src="demo/public/images/opengraph.webp" alt="Gradient Border Plugin" />
+<img src="https://gradient-border.floriankiem.com/images/opengraph.webp" alt="Gradient Border Plugin" />
 
 # Gradient Border Plugin
 
