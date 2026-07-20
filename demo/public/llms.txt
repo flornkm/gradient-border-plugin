@@ -22,3 +22,46 @@ This project ships as a CSS plugin you import alongside TailwindCSS. Apply the `
 ## Optional
 
 - [Author](https://floriankiem.com): Maintainer information.
+
+## About the Gradient Border Plugin
+
+The Gradient Border Plugin is a tiny CSS-only Tailwind CSS plugin that lets you draw a real gradient stroke around any element. It uses the modern `mask-composite` technique so the gradient flows continuously around the entire perimeter and follows whatever `border-radius` the element already has — rounded corners, pills, circles, or squircles included.
+
+## Why use it
+
+Standard CSS borders can only be assigned one color per side, which creates hard transitions at corners. Background-clip tricks work for fills but not for outlines. This plugin gives you a real gradient outline with a single class, and the API mirrors Tailwind's built-in gradient utilities so it feels native.
+
+## Features
+
+- One base utility (`gradient-border`) plus four width variants from 1px to 4px
+- Direction utilities matching Tailwind's `bg-linear-to-*` set
+- Color stop utilities (`gradient-border-from-*`, `-via-*`, `-to-*`) with full Tailwind color and alpha support
+- Animated `animate-gradient-border` variant with a configurable duration
+- Override `--gradient-border` directly for conic, radial, or arbitrary CSS gradients
+- Pure CSS, no JavaScript, no SVG filters, ships as a single import
+
+## Common use cases
+
+- Glass-style buttons and pills with a soft gradient outline
+- Liquid Glass and frosted UI accents
+- Highlighting active or focused cards
+- Animated AI / thinking states (rotating border)
+- Branded dividers, avatars, and badges
+
+## FAQ
+
+### Does it work with Tailwind v3?
+
+The plugin is built for Tailwind CSS v4 using `@utility` definitions. For v3 projects, copy the underlying CSS or pin to a v3-compatible fork.
+
+### Does it support dark mode?
+
+Yes. Use Tailwind's `dark:` variant on any color stop, e.g. `dark:gradient-border-from-neutral-700`.
+
+### Can I animate the gradient?
+
+Yes. Add `animate-gradient-border` to rotate the gradient angle continuously and override `--gradient-border-duration` to control the speed.
+
+### Is it accessible?
+
+Yes. The effect is purely visual via a `::before` pseudo-element with `pointer-events: none`, so it never interferes with focus, hit-testing, or screen readers.
