@@ -1,23 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon-light.svg" media="(prefers-color-scheme: light)" />
-    <link rel="icon" type="image/svg+xml" href="/favicon-dark.svg" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon-light.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#ffffff" />
+    <script>
+      // Paint the stored theme before the first frame, so a dark-mode reload
+      // never flashes white. Kept in sync with src/utils/theme.ts.
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var dark =
+            stored === "dark" ||
+            (stored !== "light" && matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", dark);
+          document.documentElement.style.colorScheme = dark ? "dark" : "light";
+          var favicon = document.querySelector("link[rel='icon']");
+          if (favicon) favicon.href = dark ? "/favicon-dark.svg" : "/favicon-light.svg";
+          var themeColor = document.querySelector("meta[name='theme-color']");
+          if (themeColor) themeColor.content = dark ? "#000000" : "#ffffff";
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://cdn.floriankiem.com" crossorigin />
 
     <title>Gradient Border Plugin for Tailwind CSS</title>
-    <meta name="description" content="A simple Tailwind CSS plugin for beautiful gradient borders using mask-composite. Mirrors Tailwind's gradient utilities with from / via / to color stops, configurable widths, and an animated variant." />
-    <meta name="keywords" content="tailwind gradient border, tailwind css gradient border plugin, css gradient border, mask-composite gradient border, tailwind plugin, animated gradient border" />
+    <meta
+      name="description"
+      content="A simple Tailwind CSS plugin for beautiful gradient borders using mask-composite. Mirrors Tailwind's gradient utilities with from / via / to color stops, configurable widths, and an animated variant."
+    />
+    <meta
+      name="keywords"
+      content="tailwind gradient border, tailwind css gradient border plugin, css gradient border, mask-composite gradient border, tailwind plugin, animated gradient border"
+    />
     <meta name="author" content="Florian Kiem" />
     <link rel="canonical" href="https://gradient-border.floriankiem.com/" />
 
     <meta property="og:title" content="Gradient Border Plugin for Tailwind CSS" />
-    <meta property="og:description" content="A simple Tailwind CSS plugin for beautiful gradient borders using mask-composite." />
+    <meta
+      property="og:description"
+      content="A simple Tailwind CSS plugin for beautiful gradient borders using mask-composite."
+    />
     <meta property="og:url" content="https://gradient-border.floriankiem.com/" />
-    <meta property="og:image" content="https://gradient-border.floriankiem.com/images/opengraph.webp" />
+    <meta
+      property="og:image"
+      content="https://gradient-border.floriankiem.com/images/opengraph.webp"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:type" content="website" />
@@ -25,8 +54,14 @@
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Gradient Border Plugin for Tailwind CSS" />
-    <meta name="twitter:description" content="A simple Tailwind CSS plugin for beautiful gradient borders using mask-composite." />
-    <meta name="twitter:image" content="https://gradient-border.floriankiem.com/images/opengraph.webp" />
+    <meta
+      name="twitter:description"
+      content="A simple Tailwind CSS plugin for beautiful gradient borders using mask-composite."
+    />
+    <meta
+      name="twitter:image"
+      content="https://gradient-border.floriankiem.com/images/opengraph.webp"
+    />
     <meta name="twitter:creator" content="@flornkm" />
 
     <script type="application/ld+json">

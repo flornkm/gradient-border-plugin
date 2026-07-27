@@ -5,6 +5,7 @@
     "": {
       "name": "gradient-border-plugin-demo",
       "dependencies": {
+        "@central-icons-react/round-outlined-radius-1-stroke-2": "^1.1.184",
         "@tailwindcss/postcss": "^4.1.13",
         "@tailwindcss/vite": "^4.1.13",
         "@vercel/analytics": "^2.0.1",
@@ -70,6 +71,8 @@
     "@babel/traverse": ["@babel/traverse@7.29.0", "", { "dependencies": { "@babel/code-frame": "^7.29.0", "@babel/generator": "^7.29.0", "@babel/helper-globals": "^7.28.0", "@babel/parser": "^7.29.0", "@babel/template": "^7.28.6", "@babel/types": "^7.29.0", "debug": "^4.3.1" } }, "sha512-4HPiQr0X7+waHfyXPZpWPfWL/J7dcN1mx9gL6WdQVMbPnF3+ZhSMs8tCxN7oHddJE9fhNE7+lxdnlyemKfJRuA=="],
 
     "@babel/types": ["@babel/types@7.29.0", "", { "dependencies": { "@babel/helper-string-parser": "^7.27.1", "@babel/helper-validator-identifier": "^7.28.5" } }, "sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A=="],
+
+    "@central-icons-react/round-outlined-radius-1-stroke-2": ["@central-icons-react/round-outlined-radius-1-stroke-2@1.1.298", "", { "peerDependencies": { "react": ">=14.0.0 <= 19" } }, "sha512-Gpyj9BarBQVZuXTzdFpJmSAqzgYfl/MS/+x4phLKIJ9uUjqdpGaLdnhyucqQ3HH8mb9Nl8L4y50dR0jgd/X0uw=="],
 
     "@esbuild/aix-ppc64": ["@esbuild/aix-ppc64@0.25.12", "", { "os": "aix", "cpu": "ppc64" }, "sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA=="],
 

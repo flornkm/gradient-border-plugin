@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../utils/cn";
+import type { ResolvedTheme } from "../utils/theme";
 
 const PRESET_COLORS = [
   "#ffffff",
@@ -238,23 +239,18 @@ const DARK_DEFAULTS: Stops = {
   to: { color: "#525252", position: 100 },
 };
 
-export function GradientConfigurator() {
+export function GradientConfigurator({ theme }: { theme: ResolvedTheme }) {
   const [stops, setStops] = useState<Stops>(() =>
-    typeof window !== "undefined" && window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? DARK_DEFAULTS
-      : LIGHT_DEFAULTS,
+    theme === "dark" ? DARK_DEFAULTS : LIGHT_DEFAULTS,
   );
   const [selectedStop, setSelectedStop] = useState<StopKey>("via");
   const [angle, setAngle] = useState(315);
 
+  // Follow the theme the toggle resolved to, not the OS setting directly — a
+  // manual light/dark choice has to move the defaults too.
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const handler = (e: MediaQueryListEvent) => {
-      setStops(e.matches ? DARK_DEFAULTS : LIGHT_DEFAULTS);
-    };
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
+    setStops(theme === "dark" ? DARK_DEFAULTS : LIGHT_DEFAULTS);
+  }, [theme]);
 
   const handleStopPosition = (key: StopKey, position: number) => {
     setStops((prev) => ({ ...prev, [key]: { ...prev[key], position } }));
