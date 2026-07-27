@@ -132,17 +132,26 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div className={cn("flex gap-4", align === "start" ? "items-start" : "items-center")}>
+    // Stacks below `sm`, where a fixed label column plus a control leaves too
+    // little width for either. The control wrapper needs `min-w-0`: a flex child
+    // defaults to `min-width: auto`, so without it the swatches refuse to shrink
+    // and punch straight out of the panel instead of wrapping.
+    <div
+      className={cn(
+        "flex flex-col gap-1 sm:flex-row sm:gap-4",
+        align === "start" ? "sm:items-start" : "sm:items-center",
+      )}
+    >
       <span
         className={cn(
-          "w-12 shrink-0 text-xs text-neutral-400",
+          "text-xs text-neutral-400 sm:w-12 sm:shrink-0",
           // Clears the segmented control's own padding so the two texts line up.
-          align === "start" && "pt-1.5",
+          align === "start" && "sm:pt-1.5",
         )}
       >
         {label}
       </span>
-      {children}
+      <div className="min-w-0 sm:flex-1">{children}</div>
     </div>
   );
 }
@@ -471,7 +480,7 @@ export function GradientConfigurator({ theme }: { theme: ResolvedTheme }) {
             panel gives every row one column to line up in. */}
         <div className="space-y-4 rounded-lg bg-white dark:bg-neutral-900 p-4 smooth-shadow-ring-xs">
           <Field label="Stops" align="start">
-            <div className="flex-1 space-y-3">
+            <div className="space-y-3">
               <Segmented>
                 {(["from", "via", "to"] as const).map((key) => (
                   <Segment
@@ -500,10 +509,13 @@ export function GradientConfigurator({ theme }: { theme: ResolvedTheme }) {
 
           <Field label="Color" align="start">
             {/* Each dot carries a 28px transparent target around it — they were
-                a pixel hunt at their own 20px size. Twelve to a row so the block
-                sits in the control column; `-mx-1` pulls that padding back out
-                so the first dot's *edge* lands on the column, not its hit area. */}
-            <div className="-mx-1 grid w-fit grid-cols-12">
+                a pixel hunt at their own 20px size. `-mx-1` pulls that padding
+                back out so the first dot's *edge* lands on the column, not its
+                hit area. Wrapping against a 12-target cap rather than a fixed
+                12-column grid: it still breaks two-by-twelve at full width, but
+                reflows to whatever fits once the panel narrows, where a fixed
+                grid would just overflow. */}
+            <div className="-mx-1 flex w-full max-w-[21rem] flex-wrap items-center">
               {PRESET_COLORS.map((hex) => {
                 const active = stops[selectedStop].color === hex;
                 return (
