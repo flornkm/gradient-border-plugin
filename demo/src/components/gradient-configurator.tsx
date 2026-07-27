@@ -69,6 +69,144 @@ const ANGLE_TO_DIR: Record<number, string> = {
 };
 
 /* ------------------------------------------------------------------ */
+/*  Selection-ring contrast                                            */
+/* ------------------------------------------------------------------ */
+
+/* The surface the selection ring is drawn against — the control panel, not the
+   card behind it, since that's what the swatches actually sit on. */
+const PANEL: Record<ResolvedTheme, string> = { light: "#ffffff", dark: "#171717" };
+/* A 1.5px ring is decorative, not text, so this sits far below the WCAG 4.5:1
+   for copy — it's just the floor at which the hairline stops disappearing. */
+const MIN_RING_CONTRAST = 1.6;
+
+const channels = (hex: string) => [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
+
+function luminance(hex: string) {
+  const [r, g, b] = channels(hex)
+    .map((c) => c / 255)
+    .map((c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function contrast(a: string, b: string) {
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+  return (hi + 0.05) / (lo + 0.05);
+}
+
+function blend(hex: string, toward: string, amount: number) {
+  const [a, b] = [channels(hex), channels(toward)];
+  const mixed = a.map((c, i) => Math.round(c * (1 - amount) + b[i] * amount));
+  return `#${mixed.map((c) => c.toString(16).padStart(2, "0")).join("")}`;
+}
+
+/* The selection ring wears the swatch's own color — but white on the light panel
+   (or black on the dark one) is a ring you can't see. Walk the color toward the
+   opposite end of the scale until it clears the floor above; anything that
+   already contrasts is returned untouched, so saturated swatches keep their
+   exact hue and only the near-invisible ends get pulled. */
+function ringColor(hex: string, theme: ResolvedTheme) {
+  const panel = PANEL[theme];
+  const toward = theme === "dark" ? "#ffffff" : "#000000";
+  for (let amount = 0; amount < 1; amount += 0.1) {
+    const candidate = blend(hex, toward, amount);
+    if (contrast(candidate, panel) >= MIN_RING_CONTRAST) return candidate;
+  }
+  return toward;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Panel primitives                                                   */
+/* ------------------------------------------------------------------ */
+
+/* One settings row: label in a fixed column on the left, control on the right.
+   The fixed column is what actually lines the panel up — every control starts
+   at the same x no matter how long its label is. */
+function Field({
+  label,
+  align = "center",
+  children,
+}: {
+  label: string;
+  /** `start` for controls taller than one line, so the label sits on the first. */
+  align?: "center" | "start";
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={cn("flex gap-4", align === "start" ? "items-start" : "items-center")}>
+      <span
+        className={cn(
+          "w-12 shrink-0 text-xs text-neutral-400",
+          // Clears the segmented control's own padding so the two texts line up.
+          align === "start" && "pt-1.5",
+        )}
+      >
+        {label}
+      </span>
+      {children}
+    </div>
+  );
+}
+
+/* A real segmented control rather than a row of text buttons: a sunken track
+   with one raised thumb that slides between options. The thumb is a
+   smooth-shadow-ring-xs, so the page wears its sibling plugin. */
+function Segmented({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex w-fit items-center gap-0.5 rounded-full p-0.5 bg-neutral-100 dark:bg-neutral-800">
+      {children}
+    </div>
+  );
+}
+
+function Segment({
+  active,
+  layoutId,
+  onClick,
+  dot,
+  children,
+}: {
+  active: boolean;
+  layoutId: string;
+  onClick: () => void;
+  /** Hex to show as a swatch before the label — what this option currently is. */
+  dot?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        "relative rounded-full py-1 text-xs font-medium whitespace-nowrap transition-colors cursor-pointer",
+        // A dot reads as its own left margin, so it needs less padding than text
+        // would to sit the same distance off the pill's edge.
+        dot ? "pr-2.5 pl-1.5" : "px-2.5",
+        active
+          ? "text-neutral-900 dark:text-white"
+          : "text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-200",
+      )}
+    >
+      {active && (
+        <motion.span
+          layoutId={layoutId}
+          className="absolute inset-0 rounded-full bg-white dark:bg-neutral-700 smooth-shadow-ring-xs"
+          transition={{ type: "spring", duration: 0.4, bounce: 0.15 }}
+        />
+      )}
+      <span className="relative z-10 flex items-center gap-1.5">
+        {dot && (
+          // The hairline keeps a white dot from vanishing into the raised thumb.
+          <span
+            className="size-2.5 rounded-full border border-black/10 dark:border-white/20"
+            style={{ backgroundColor: dot }}
+          />
+        )}
+        {children}
+      </span>
+    </button>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /*  Types                                                              */
 /* ------------------------------------------------------------------ */
 
@@ -105,7 +243,9 @@ function StopBar({
   return (
     <div
       ref={barRef}
-      className="relative h-3 rounded-full border border-neutral-200/60 dark:border-neutral-700/60"
+      /* Inset by half a handle: the stops sit at 0% and 100% with a -50%
+         translate, so without this the end handles hang over the panel's edge. */
+      className="relative mx-2.5 h-3 rounded-full border border-neutral-200/60 dark:border-neutral-700/60"
       style={{ background: gradient, touchAction: "none" }}
     >
       {(["from", "via", "to"] as const).map((key) => (
@@ -196,7 +336,7 @@ function CopySnippet({ value }: { value: string }) {
   };
 
   return (
-    <div className="flex items-start justify-between gap-3 w-full rounded-xl border border-neutral-200 dark:border-neutral-800 px-4 py-3 overflow-hidden">
+    <div className="flex items-start justify-between gap-3 w-full px-4 py-3 overflow-hidden">
       <div className="min-w-0 flex-1 [mask-image:linear-gradient(to_right,black_calc(100%-2rem),transparent)]">
         <pre className="tabular-nums font-normal text-sm whitespace-pre overflow-x-auto scrollbar-none">
           {value}
@@ -298,9 +438,12 @@ export function GradientConfigurator({ theme }: { theme: ResolvedTheme }) {
 
   return (
     <div className="w-full space-y-5">
-      <div className="p-8 rounded-md bg-neutral-50 dark:bg-neutral-950 space-y-6">
+      {/* Concentric radii: the card's 16px minus its 8px padding leaves exactly
+          the panel's 8px, so the two curves stay parallel instead of the inner
+          one bulging against a wider outer corner. */}
+      <div className="p-2 rounded-2xl bg-neutral-50 dark:bg-neutral-950 space-y-2">
         {/* Preview bubble */}
-        <div className="flex justify-center py-24">
+        <div className="flex justify-center px-6 py-24">
           <div
             className="gradient-border rounded-full px-16 py-6 bg-linear-to-t from-neutral-100 to-white dark:from-neutral-900 dark:via-neutral-850 dark:to-neutral-800/80 transition-all duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:brightness-105 active:scale-95 cursor-pointer select-none"
             style={
@@ -323,68 +466,87 @@ export function GradientConfigurator({ theme }: { theme: ResolvedTheme }) {
           </div>
         </div>
 
-        {/* Stop bar + angle dial */}
-        <div className="flex items-end gap-6">
-          <div className="flex-1 space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-neutral-500">Stops</span>
-              <div className="flex items-center gap-1">
+        {/* The controls get their own raised surface inside the card, wearing
+            the sibling shadow plugin's elevated-surface utility. A labelled
+            panel gives every row one column to line up in. */}
+        <div className="space-y-4 rounded-lg bg-white dark:bg-neutral-900 p-4 smooth-shadow-ring-xs">
+          <Field label="Stops" align="start">
+            <div className="flex-1 space-y-3">
+              <Segmented>
                 {(["from", "via", "to"] as const).map((key) => (
-                  <button
+                  <Segment
                     key={key}
+                    active={selectedStop === key}
+                    layoutId="stop-selector"
                     onClick={() => setSelectedStop(key)}
-                    className={cn(
-                      "relative text-xs cursor-pointer px-2 py-0.5 rounded-md transition-colors",
-                      selectedStop === key
-                        ? "text-neutral-900 dark:text-white font-medium"
-                        : "text-neutral-400 hover:text-neutral-500",
-                    )}
+                    dot={stops[key].color}
                   >
-                    {selectedStop === key && (
-                      <motion.span
-                        layoutId="stop-bg"
-                        className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 rounded-md"
-                        transition={{ type: "spring", duration: 0.35, bounce: 0.15 }}
-                      />
-                    )}
-                    <span className="relative z-10">{key}</span>
-                  </button>
+                    {key}
+                  </Segment>
                 ))}
-              </div>
+              </Segmented>
+              <StopBar
+                stops={stops}
+                onStopChange={handleStopPosition}
+                selectedStop={selectedStop}
+                onSelectStop={setSelectedStop}
+              />
             </div>
-            <StopBar
-              stops={stops}
-              onStopChange={handleStopPosition}
-              selectedStop={selectedStop}
-              onSelectStop={setSelectedStop}
-            />
+          </Field>
+
+          <Field label="Angle">
+            <AngleDial angle={angle} onChange={setAngle} />
+          </Field>
+
+          <Field label="Color" align="start">
+            {/* Each dot carries a 28px transparent target around it — they were
+                a pixel hunt at their own 20px size. Twelve to a row so the block
+                sits in the control column; `-mx-1` pulls that padding back out
+                so the first dot's *edge* lands on the column, not its hit area. */}
+            <div className="-mx-1 grid w-fit grid-cols-12">
+              {PRESET_COLORS.map((hex) => {
+                const active = stops[selectedStop].color === hex;
+                return (
+                  <motion.button
+                    key={hex}
+                    type="button"
+                    aria-label={`${selectedStop} ${HEX_TO_TW[hex] ?? hex}`}
+                    aria-pressed={active}
+                    title={HEX_TO_TW[hex] ?? hex}
+                    onClick={() => handleColor(hex)}
+                    className="group grid size-7 cursor-pointer place-items-center rounded-full outline-none"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 28 }}
+                  >
+                    <span
+                      className={cn(
+                        "size-5 rounded-full border-[1.5px] transition-colors",
+                        active
+                          ? "border-black/5 ring-[1.5px] ring-offset-2 ring-offset-white dark:border-white/15 dark:ring-offset-neutral-900"
+                          : "border-black/5 group-hover:border-black/10 dark:border-white/15 dark:group-hover:border-white/25",
+                      )}
+                      style={{
+                        backgroundColor: hex,
+                        // The swatch's own color rather than a fixed grey, so it
+                        // reads as "this one" instead of a generic marker on top
+                        // of it — contrast-corrected so it can't vanish.
+                        ...(active ? { "--tw-ring-color": ringColor(hex, theme) } : {}),
+                      }}
+                    />
+                  </motion.button>
+                );
+              })}
+            </div>
+          </Field>
+
+          {/* The class string is the panel's output, so it lives in the panel —
+              a hairline and the panel's own padding instead of a third bordered
+              box nested inside the second. */}
+          <div className="-mx-4 -mb-4 border-t border-neutral-200 dark:border-neutral-800">
+            <CopySnippet value={classString} />
           </div>
-
-          <AngleDial angle={angle} onChange={setAngle} />
         </div>
-
-        {/* Color presets */}
-        <div className="flex gap-1 flex-wrap">
-          {PRESET_COLORS.map((hex) => (
-            <motion.button
-              key={hex}
-              onClick={() => handleColor(hex)}
-              className={cn(
-                "size-5 rounded-full cursor-pointer border-[1.5px] transition-colors",
-                stops[selectedStop].color === hex
-                  ? "border-black/30 dark:border-white/50"
-                  : "border-black/5 dark:border-white/15 hover:border-black/10 dark:hover:border-white/25",
-              )}
-              style={{ backgroundColor: hex }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.9 }}
-              transition={{ type: "spring", stiffness: 500, damping: 28 }}
-            />
-          ))}
-        </div>
-
-        {/* Code snippet */}
-        <CopySnippet value={classString} />
       </div>
     </div>
   );
