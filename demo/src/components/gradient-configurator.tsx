@@ -515,7 +515,7 @@ export function GradientConfigurator({ theme }: { theme: ResolvedTheme }) {
                 12-column grid: it still breaks two-by-twelve at full width, but
                 reflows to whatever fits once the panel narrows, where a fixed
                 grid would just overflow. */}
-            <div className="-mx-1 flex w-full max-w-[21rem] flex-wrap items-center">
+            <div className="-mx-1 flex w-full max-w-[21.5rem] flex-wrap items-center">
               {PRESET_COLORS.map((hex) => {
                 const active = stops[selectedStop].color === hex;
                 return (
